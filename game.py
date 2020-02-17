@@ -1,24 +1,19 @@
 import numpy as np
-def game_core_2(number):
+def game_core(number):
     count = 0
-    bound = 100
-    predict = np.random.randint(1, bound)
+    low = 1
+    high = 100
+    predict = np.random.randint(low, high)
     while True:
         count += 1
         if predict == number:
             break
         elif predict > number:
-            predict -= 1
-            if predict + 1 > bound / 2:
-                predict = np.random.randint(1, bound / 2)  # отрезаем из рассмотрения всё, что справа
-            else:
-                predict = np.random.randint(1, predict + 1)
+            high = predict
+            predict = np.random.randint(low, high)
         elif predict < number:
-            predict += 1
-            if predict - 1 < bound / 2:
-                predict = np.random.randint(bound / 2, 100)
-            else:
-                predict = np.random.randint(predict - 1, 100)
+            low = predict
+            predict = np.random.randint(low, high)
     return count
 
 def score_game(game_core):
