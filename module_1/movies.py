@@ -18,13 +18,11 @@ answer_ls.append(year08.original_title[year08.revenue.idxmax()])
 year = data[(data.release_year >= 2012)
             & (data.release_year <= 2014)]
 answer_ls.append(year.original_title[year.profit.idxmin()])
+data_plot = data['genres'].str.cat(sep='|')
+dat = pd.Series(data_plot.split('|'))
+info = dat.value_counts(ascending=False)
+answer_ls.append(info[info == info.max()].index[0])
 genres = ['Action', 'Adventure', 'Drama', 'Comedy', 'Thriller']
-def num(genre):
-    return len(data[data.genres.str.contains(genre)])
-count = {}
-for gen in genres:
-    count[gen] = num(gen)
-answer_ls.append(max(count, key=count.get)) # способ побыстрее? как-то через groupby, без создания списка имён?
 prof = data[data.profit > 0]
 def num1(genre):
     return len(prof[prof.genres.str.contains(genre)])
